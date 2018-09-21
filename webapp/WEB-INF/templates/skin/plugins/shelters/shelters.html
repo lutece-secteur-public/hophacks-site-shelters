@@ -1,0 +1,37 @@
+
+<section class="section gray-bg">
+	<div class="container">
+		<div class="row title text-center">
+			<h2 >#i18n{shelters.shelters.title}</h2>
+		</div>
+		<div class="shelter">
+		    <#list shelter_list as shelter >
+                <div class="shelter-content text-center">
+                    <div class="cover">
+                        <img src="images/shelter.jpg" alt="Shelter" class="avatar">
+                    </div>
+                    <div class="shelter-info blue-bg<#if shelter.bedAvailable=0> unavalaible <#elseif shelter.bedAvailable &gt; 0> avalaible<#else> unknow</#if>">
+                        <#if shelter.bedAvailable !=-1> ${shelter.bedAvailable}<#else> ? </#if>
+                   </div>    
+                    <div class="title">
+                        <h1>${shelter.name}</h1>
+                        <h2 class="regular<#if shelter.bedAvailable=0> unavalaible <#elseif shelter.bedAvailable &gt; 0> avalaible<#else> unknow</#if>">${shelter.availability}  / ${shelter.bedCapacity} beds</h2> 
+                        <h3 class="muted regular">${shelter.description}</h3>
+                    </div>
+                    <p>  <i class="fa fa-map-marker"></i>  ${shelter.address} </p>
+                    <p>  <i class="fa fa-phone"></i>  <a href="mailto:${shelter.phoneNumber}">${shelter.phoneNumber}</a> </p>
+                    <p>  <i class="fa fa-at"></i>  <a href="mailto:${shelter.email}">${shelter.email}</a> </p>
+                    <p>  <i class="fa fa-globe"></i>  <a href="${shelter.webSite}" target="_blank">#i18n{shelters.shelters.website}</a> </p>
+                    <div class="hidden">  
+                        <h2>
+                            <span class="badge badge-success">${shelter.availability}</span><br>
+                            <span class="badge badge-secondary">${shelter.bedCapacity} beds</span>
+                        </h2> 
+                    </div>
+     
+               </div>
+           </#list>
+        </div>
+    </div>
+</section>
+  

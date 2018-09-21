@@ -1,3 +1,5 @@
+UPDATE core_admin_user SET password = "PLAINTEXT:adminadmin", locale="en", password_max_valid_date="2019-01-01 00:00:00" WHERE id_user = 1;
+
 
 -- override site properties
 REPLACE INTO core_datastore VALUES ('portal.site.site_property.name', 'Homeless Shelters of Baltimore');

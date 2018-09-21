@@ -5,8 +5,8 @@ ARG site=site-shelters-1.0.0-SNAPSHOT
 
 # build and install the plugin
 WORKDIR /plugin
-RUN git clone https://github.com/lutece-secteur-public/hophacks-plugin-shelters.git
-RUN mvn install
+RUN git clone https://github.com/lutece-secteur-public/hophacks-plugin-shelters.git .
+RUN mvn install -DskipTests=true
 
 
 # build the site and assemble the webapp

@@ -29,7 +29,7 @@ RUN  /etc/init.d/mysql start && \
     ant && sleep 5s && \
     /etc/init.d/mysql stop 
 
-RUN mv /app/target/${site}/ /var/lib/tomcat8/webapps/ROOT
+RUN mv /app/target/${site}/ /var/lib/tomcat8/webapps/shelters
 
 
 COPY entrypoint.sh /entrypoint.sh

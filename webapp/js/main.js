@@ -2,11 +2,11 @@ jQuery(function($) {
 	"use strict";
 	// Author Code Here
 
-	var owlPricing;
 	var ratio = 2;
 
 	// Window Load
 	$(window).load(function() {
+		$('#map').toggle();
 		// Preloader
 		$('.intro-tables, .parallax, header').css('opacity', '0');
 		$('.preloader').addClass('animated fadeOut').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function() {
@@ -23,7 +23,7 @@ jQuery(function($) {
 			$('.parallax img').css('width', $('.parallax').height() * ratio + 'px');
 		}
 
-		 $('header').height($(window).height() - 450);
+		$('header').height($(window).height() - 450);
 		
 		$('section .cut').each(function() {
 			if ($(this).hasClass('cut-top'))
@@ -36,35 +36,15 @@ jQuery(function($) {
 		$('nav').addClass('original').clone().insertAfter('nav').addClass('navbar-fixed-top').css('position', 'fixed').css('top', '0').css('margin-top', '0').removeClass('original');
 		$('.mobile-nav ul').html($('nav .navbar-nav').html());
 		$('nav.navbar-fixed-top .navbar-brand img').attr('src', $('nav.navbar-fixed-top .navbar-brand img').data("active-url"));
+		$('nav.navbar-fixed-top .btn-list-map').toggleClass('btn-white-fill').toggleClass('btn-blue-fill').css('top','15px');
+		$('nav.navbar-fixed-top .btn-list-map').on('click', function() {
+			$(this).children().toggleClass('fa-map-marker').toggleClass('fa-list');
+			$('#map').slideToggle();
+			$('#shelter-list').slideToggle();
+		});	
 
-		// Typing Intro Init
-		$(".typed").typewriter({
-			speed: 60
-		});
-
-		// Popup Form Init
-		/*
-		var i = 0;
-		var interval = 0.15;
-		$('.popup-form .dropdown-menu li').each(function() {
-			$(this).css('animation-delay', i + "s");
-			i += interval;
-		});
-		$('.popup-form .dropdown-menu li a').click(function(event) {
-			event.preventDefault();
-			$(this).parent().parent().prev('button').html($(this).html());
-		});
-*/
-		// Onepage Nav
-		/*
-		$('.navbar.navbar-fixed-top .navbar-nav').onePageNav({
-			currentClass: 'active',
-			changeHash: false,
-			scrollSpeed: 400,
-			filter: ':not(.btn)'
-		});
-		*/
 	});
+
 	// Window Scroll
 	function onScroll() {
 		if ($(window).scrollTop() > 50) {
@@ -82,8 +62,6 @@ jQuery(function($) {
 	$(window).resize(function() {
 		$('header').height($(window).height());
 	});
-
-	
 
 	// Mobile Nav
 	$('body').on('click', 'nav .navbar-toggle', function() {
@@ -125,6 +103,14 @@ jQuery(function($) {
 				return false;
 			}
 		}
+
 	});
 
+
+	$('.btn-list-map').on('click', function() {
+		$(this).children().toggleClass('fa-map-marker').toggleClass('fa-list');
+		$('#map').slideToggle();
+		$('#shelter-list').slideToggle();
+	});	
+	
 });

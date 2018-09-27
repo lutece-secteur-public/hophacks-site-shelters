@@ -1,14 +1,15 @@
-
-<section class="section gray-bg">
+<section class="section">
 	<div class="container">
-		<div class="row title text-center">
+		<div class="row title text-center hidden">
 			<h2 >#i18n{shelters.shelters.title}</h2>
-		</div>
-		<div class="shelter">
+        </div>
+		<div id="shelter-list" class="shelter">
 		    <#list shelter_list as shelter >
                 <div class="shelter-content text-center">
                     <div class="cover">
-                        <img src="images/shelter.jpg" alt="Shelter" class="avatar">
+                        <#if shelter.fileContentBase64?? >
+                            <img src="data:${shelter.fileType!''};base64, ${shelter.fileContentBase64!''}"  alt="${shelter.name}" class="avatar">
+                        </#if>
                     </div>
                     <div class="shelter-info blue-bg<#if shelter.bedAvailable=0> unavalaible <#elseif shelter.bedAvailable &gt; 0> avalaible<#else> unknow</#if>">
                         <#if shelter.bedAvailable !=-1> ${shelter.bedAvailable}<#else> ? </#if>
@@ -18,20 +19,39 @@
                         <h2 class="regular<#if shelter.bedAvailable=0> unavalaible <#elseif shelter.bedAvailable &gt; 0> avalaible<#else> unknow</#if>">${shelter.availability}  / ${shelter.bedCapacity} beds</h2> 
                         <h3 class="muted regular">${shelter.description}</h3>
                     </div>
-                    <p>  <i class="fa fa-map-marker"></i>  ${shelter.address} </p>
+                    <p class="muted regular map">  
+                        <i class="fa fa-map-marker"></i>  ${shelter.address} 
+                    </p>
                     <p>  <i class="fa fa-phone"></i>  <a href="mailto:${shelter.phoneNumber}">${shelter.phoneNumber}</a> </p>
                     <p>  <i class="fa fa-at"></i>  <a href="mailto:${shelter.email}">${shelter.email}</a> </p>
-                    <p>  <i class="fa fa-globe"></i>  <a href="${shelter.webSite}" target="_blank">#i18n{shelters.shelters.website}</a> </p>
-                    <div class="hidden">  
-                        <h2>
-                            <span class="badge badge-success">${shelter.availability}</span><br>
-                            <span class="badge badge-secondary">${shelter.bedCapacity} beds</span>
-                        </h2> 
-                    </div>
-     
+                    <p><i class="fa fa-globe"></i>  <a  href="${shelter.webSite}" target="_blank">#i18n{shelters.shelters.website}</a> </p>
                </div>
            </#list>
         </div>
     </div>
-</section>
-  
+</section>  
+<section class="section map">
+	<div class="container-fluid">
+        <div id="map" class="shelter"></div>
+    </div>
+</section> 
+
+<script>
+    $(function() {
+        shelterMap = initShelterMap( ${initLat} , ${initLon} , ${initZoom} );
+        <#list shelter_list as shelter >
+			// add shelter
+			<#assign icon = 'grayIcon'>
+			<#if shelter.bedAvailable = 0 >
+                <#assign icon = 'redIcon'>
+            <#elseif shelter.bedAvailable &gt; 0>
+                <#assign icon = 'greenIcon'>
+            </#if>
+        	var marker_${shelter.id} = L.marker([${shelter.locationLat?c}, ${shelter.locationLon?c}], {icon: ${icon} } );
+			marker_${shelter.id}.bindPopup("<p class=\"text-center clearfix\"><span class=\"pull-right label label-<#if shelter.bedAvailable=0>danger<#elseif shelter.bedAvailable &gt; 0>success<#else>default</#if>\"> ${shelter.availability} </span><span class=\"pull-left\">${shelter.name}</span></p><p class=\"text-center\"><#if shelter.fileContentBase64?? ><img src=\"data:${shelter.fileType!''};base64, ${shelter.fileContentBase64!''}\" alt=\"${shelter.name}\" class=\"avatar hidden-xs\"></#if></p></div><p class=\"muted regular map\"><i class=\"fa fa-map-marker\"></i>  ${shelter.address}</p><p>  <i class=\"fa fa-phone\"></i>  <a href=\"mailto:${shelter.phoneNumber}\">${shelter.phoneNumber}</a></p>");
+			marker_${shelter.id}.addTo(shelterMap);
+		</#list>
+    });
+</script>
+
+

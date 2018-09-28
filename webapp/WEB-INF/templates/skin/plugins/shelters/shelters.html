@@ -47,7 +47,7 @@
             <#elseif shelter.bedAvailable &gt; 0>
                 <#assign icon = 'greenIcon'>
             </#if>
-        	var marker_${shelter.id} = L.marker([${shelter.locationLat?c}, ${shelter.locationLon?c}], {icon: ${icon} } );
+        	var marker_${shelter.id} = L.marker([${shelter.locationLat}, ${shelter.locationLon}], {icon: ${icon} } );
 			marker_${shelter.id}.bindPopup("<p class=\"text-center clearfix\"><span class=\"pull-right label label-<#if shelter.bedAvailable=0>danger<#elseif shelter.bedAvailable &gt; 0>success<#else>default</#if>\"> ${shelter.availability} </span><span class=\"pull-left\">${shelter.name}</span></p><p class=\"text-center\"><#if shelter.fileContentBase64?? ><img src=\"data:${shelter.fileType!''};base64, ${shelter.fileContentBase64!''}\" alt=\"${shelter.name}\" class=\"avatar hidden-xs\"></#if></p></div><p class=\"muted regular map\"><i class=\"fa fa-map-marker\"></i>  ${shelter.address}</p><p>  <i class=\"fa fa-phone\"></i>  <a href=\"mailto:${shelter.phoneNumber}\">${shelter.phoneNumber}</a></p>");
 			marker_${shelter.id}.addTo(shelterMap);
 		</#list>
